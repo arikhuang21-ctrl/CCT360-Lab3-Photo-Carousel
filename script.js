@@ -6,55 +6,63 @@ function showPhoto() {
   let photoDescription;
   let caption;
   let storyTitle;
+  let storyDescription;
   let part;
 
-  if (storyNumber == 1) {
+  if (storyNumber === 1) {
     storyTitle = "Farther Away";
+    storyDescription = "A journey from the familiar moon into a wider sky.";
 
-    if (photoNumber == 1) {
+    if (photoNumber === 1) {
       photoFile = "images/moon.jpg";
-      photoDescription = "The moon in a dark sky";
-      caption = "I start with the moon outside my window.";
-    } else if (photoNumber == 2) {
+      photoDescription = "A close view of the moon against a black sky";
+      caption = "The moon outside my window makes the night feel close.";
+    } else if (photoNumber === 2) {
       photoFile = "images/star.webp";
-      photoDescription = "One bright star in the night sky";
-      caption = "One bright star pulls my eyes farther away.";
+      photoDescription = "One bright star shining among smaller stars";
+      caption = "I follow one bright star beyond what I know.";
     } else {
       photoFile = "images/pleiades.jpg";
-      photoDescription = "A blue cluster of many stars";
-      caption = "I notice that the sky is much bigger than I thought.";
+      photoDescription = "A blue cluster surrounded by many stars";
+      caption = "The crowded sky makes me wonder how much more is out there.";
     }
   } else {
     storyTitle = "Finding Home";
+    storyDescription = "A journey from distant stars back to something familiar.";
 
-    if (photoNumber == 1) {
+    if (photoNumber === 1) {
       photoFile = "images/pleiades.jpg";
-      photoDescription = "A blue cluster of many stars";
-      caption = "A wide field of stars feels almost endless.";
-    } else if (photoNumber == 2) {
+      photoDescription = "A blue cluster surrounded by many stars";
+      caption = "Among so many distant stars, I feel far from home.";
+    } else if (photoNumber === 2) {
       photoFile = "images/star.webp";
-      photoDescription = "One bright star in the night sky";
-      caption = "One bright light gives me a place to focus.";
+      photoDescription = "One bright star shining among smaller stars";
+      caption = "One bright star gives me a point to follow.";
     } else {
       photoFile = "images/moon.jpg";
-      photoDescription = "The moon in a dark sky";
-      caption = "The familiar moon makes the distance feel smaller.";
+      photoDescription = "A close view of the moon against a black sky";
+      caption = "The familiar moon reminds me that home is still close.";
     }
   }
 
-  if (photoNumber == 1) {
+  if (photoNumber === 1) {
     part = "Beginning - 1 of 3";
-  } else if (photoNumber == 2) {
+  } else if (photoNumber === 2) {
     part = "Middle - 2 of 3";
   } else {
     part = "End - 3 of 3";
   }
 
   document.getElementById("story-title").textContent = storyTitle;
+  document.getElementById("story-description").textContent = storyDescription;
   document.getElementById("part").textContent = part;
   document.getElementById("photo").src = photoFile;
   document.getElementById("photo").alt = photoDescription;
   document.getElementById("caption").textContent = caption;
+  document.getElementById("first-story").setAttribute("aria-pressed", storyNumber === 1);
+  document.getElementById("second-story").setAttribute("aria-pressed", storyNumber === 2);
+  document.getElementById("previous-photo").disabled = photoNumber === 1;
+  document.getElementById("next-photo").disabled = photoNumber === 3;
 }
 
 document.getElementById("first-story").addEventListener("click", function() {
@@ -70,21 +78,17 @@ document.getElementById("second-story").addEventListener("click", function() {
 });
 
 document.getElementById("previous-photo").addEventListener("click", function() {
-  if (photoNumber == 1) {
-    photoNumber = 3;
-  } else {
+  if (photoNumber > 1) {
     photoNumber = photoNumber - 1;
+    showPhoto();
   }
-  showPhoto();
 });
 
 document.getElementById("next-photo").addEventListener("click", function() {
-  if (photoNumber == 3) {
-    photoNumber = 1;
-  } else {
+  if (photoNumber < 3) {
     photoNumber = photoNumber + 1;
+    showPhoto();
   }
-  showPhoto();
 });
 
 showPhoto();
